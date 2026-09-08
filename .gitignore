@@ -1,0 +1,44 @@
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+env/
+.env
+*.egg-info/
+.pytest_cache/
+
+# Backend cache
+backend/cache/
+cache/
+
+# Models & data — large binaries, do not commit
+# (see MODELS.md for how to obtain/regenerate these)
+*.keras
+*.h5
+data/*.txt
+!data/README.md
+artifacts/*.joblib
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo

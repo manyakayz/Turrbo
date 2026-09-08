@@ -1,0 +1,19 @@
+# Core ML / data
+numpy>=1.26,<2.0
+pandas>=2.0,<3.0
+scikit-learn>=1.3,<2.0
+tensorflow-cpu>=2.16,<2.22
+joblib>=1.3,<2.0
+
+# Plotting (training script only)
+matplotlib>=3.8,<4.0
+seaborn>=0.13,<0.14
+
+# Backend
+fastapi>=0.110,<1.0
+uvicorn[standard]>=0.29,<1.0
+pydantic>=2.6,<3.0
+
+# Testing
+pytest>=8.0,<9.0
+httpx>=0.27,<1.0
