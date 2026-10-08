@@ -84,29 +84,7 @@ NASA C-MAPSS (FD001-FD004)
 └──────────────────┘        └──────────────────────┘
 ```
 
-## Folder structure
 
-```
-├── src/turbofan_rul/     Shared pipeline: config, data, model, losses, inference
-│                         (imported by both training and serving — one implementation)
-├── training/
-│   ├── train_v4.py        Training script (the current production model)
-│   └── plots.py            Evaluation plot generation
-├── scripts/
-│   └── evaluate.py         Load a trained model, report regression + classification metrics
-├── backend/
-│   ├── app/main.py         FastAPI server
-│   └── tests/test_api.py   Integration tests (require real data + model)
-├── frontend/               React + TypeScript + Vite dashboard
-├── docs/
-│   ├── experiments/         v1/v2 training script history + writeup
-│   └── screenshots/
-├── tests/test_pipeline.py  Unit tests (synthetic data, no external files needed)
-├── MODELS.md               Model provenance — read this before wondering which .keras to use
-├── requirements.txt
-├── Dockerfile / docker-compose.yml
-└── .github/workflows/ci.yml
-```
 
 ## Getting started
 
@@ -161,16 +139,6 @@ npm run dev
 Opens on `http://localhost:5173`, proxying `/api` to the backend on `:8000`
 (see `frontend/vite.config.ts`).
 
-### Or run everything with Docker
-
-```bash
-docker compose up --build
-```
-
-Backend on `:8000`, frontend on `:3000`. Requires `data/` and
-`turbofan_rul_v4.keras` to already be present locally (mounted as volumes,
-not baked into the image).
-
 ## API reference
 
 | Endpoint | Description |
@@ -180,17 +148,6 @@ not baked into the image).
 | `GET /api/engines/{unit_id}/telemetry` | Sensor history + 20-point RUL degradation trajectory with confidence bands for one engine |
 | `GET /api/fleet/summary` | Fleet-wide risk/status/maintenance-category breakdown |
 
-## Testing
-
-```bash
-pytest tests/                              # fast, synthetic data, no setup needed
-pytest -m integration backend/tests/       # requires real data/ + turbofan_rul_v4.keras
-```
-
-CI (`.github/workflows/ci.yml`) runs the fast unit suite plus frontend
-lint/type-check/build on every push — the integration suite needs real data
-and weights that aren't (and shouldn't be) committed to git, so it's meant to
-be run locally.
 
 ## Tech stack
 
