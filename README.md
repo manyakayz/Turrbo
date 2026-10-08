@@ -51,37 +51,35 @@ actually fly under.
 NASA C-MAPSS (FD001-FD004)
         │
         ▼
-┌───────────────────────────────────────────┐
-│  Preprocessing (src/turbofan_rul/data.py)  │
+┌─────────────────────────────────────────────┐
+│  Preprocessing (src/turbofan_rul/data.py)   │
 │  • RUL labeling (piecewise-linear, clip 150)│
 │  • KMeans(k=6) operating-condition clusters │
 │  • Per-condition MinMax scaling             │
 │  • 30-cycle sliding-window sequences        │
-└───────────────────────────────────────────┘
+└─────────────────────────────────────────────┘
         │
         ▼
-┌───────────────────────────────────────────┐
-│  BiLSTM v4 (src/turbofan_rul/model.py)     │
-│  sensor_input(30,14) ──▶ BiLSTM(64)         │
-│                       ──▶ BiLSTM(32) ─┐     │
+┌──────────────────────────────────────────────┐
+│  BiLSTM v4 (src/turbofan_rul/model.py)       │
+│  sensor_input(30,14) ──▶ BiLSTM(64)          │
+│                       ──▶ BiLSTM(32) ─┐      │
 │  condition_input(1) ──▶ Embedding(8) ─┴▶Dense│
-│  loss: asymmetric Huber (2x penalty on late │
-│        predictions — see losses.py)         │
-└───────────────────────────────────────────┘
+└──────────────────────────────────────────────┘
         │
         ▼
-┌───────────────────────────────────────────┐
+┌─────────────────────────────────────────────┐
 │  MC Dropout inference (inference.py)        │
 │  50x forward passes, dropout active         │
 │  → (mean RUL, uncertainty std)              │
 │  → risk level + maintenance recommendation  │
-└───────────────────────────────────────────┘
+└─────────────────────────────────────────────┘
         │
         ▼
-┌──────────────────┐        ┌──────────────────────┐
-│  FastAPI backend   │◀─────▶│  React + TS dashboard │
-│  (backend/app/)    │  REST │  (frontend/)          │
-└──────────────────┘        └──────────────────────┘
+┌──────────────────┐         ┌────────────────────────┐
+│  FastAPI backend │ ◀─────▶ │  React + TS dashboard  │
+│  (backend/app/)  │  REST   │  (frontend/)           │
+└──────────────────┘         └────────────────────────┘
 ```
 
 
@@ -156,10 +154,6 @@ Opens on `http://localhost:5173`, proxying `/api` to the backend on `:8000`
 **Frontend:** React, TypeScript, Vite, Recharts, Tailwind
 **Dataset:** [NASA C-MAPSS Turbofan Engine Degradation Simulation](https://www.nasa.gov/intelligent-systems-division/discovery-and-systems-health/pcoe/pcoe-data-set-repository/)
 
-## Further reading
-
-- [`MODELS.md`](MODELS.md) — which `.keras` file to use and why it matters
-- [`docs/experiments/README.md`](docs/experiments/README.md) — the v1 → v2 → v4 iteration history
 
 ## License
 
